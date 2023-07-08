@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: RT Mastodon Feed
- * Plugin URI: https://github.com/SethRobinson/rt-mastodon-feed
- * Description: A simple widget for Wordpress that displays a Mastodon feed. Uses SimplePie.
+ * Plugin URI: https://codedojo.com/
+ * Description: This is a plugin that displays Mastodon Feed.  It uses SimplePie for the rss processing and caching.
  * Version: 1.0.0
  * Author: Seth A. Robinson
  * Author URI: https://rtsoft.com/
- * License: MIT
+ * License: GPL2
  */
 
 //ini_set('display_errors', 1);
@@ -74,7 +74,7 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
 .mastodon-date {
   font-weight: bold;
     margin-bottom: 10px;
-    font-size: calc(1.2vw); 
+   
 }
 .mastodon-title {
     color: #333;
@@ -83,12 +83,13 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
     color: #555;
 }
 .mastodon-media img, .mastodon-media video {
-  max-width: 100%;
-  height: 240px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
+    max-width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>';
 
 		// Fetch the option value
