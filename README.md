@@ -16,7 +16,7 @@ Visit [codedojo.com](https://codedojo.com) or [c2kyoto.com](https://c2kyoto.com)
 
 ## Installation
 
-* First, [download SimplePie](https://simplepie.org/wiki/setup/setup) and [install it](https://simplepie.org/wiki/setup/setup).  It's pretty simple.  It's a php thingie that can download and process rss feeds as well as cache them and required for this widget
+* First, [download SimplePie](https://simplepie.org/downloads/) and [install it](https://simplepie.org/wiki/setup/setup).  It's pretty simple.  It's a php thingie that can download and process rss feeds as well as cache them and required for this widget
 * Put the entire rt-mastodon-feed folder in your wordpress *wp-content/plugins* directory.
 * In the Wordpress Plugins menu, click "Enable" on the plugin.  If SimplePie isn't installed, it will tell you.
 * On The Wordpress Dashboard, look for a new "RT Mastodon Feed Settings" option.  Click that and fill in the info.
