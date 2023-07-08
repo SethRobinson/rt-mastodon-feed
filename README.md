@@ -12,7 +12,7 @@ A simple widget for Wordpress that displays a Mastodon feed. Uses SimplePie.
 
 ## Real world examples
 
-Visit [codedojo.com]() or [c2kyoto.com]() to see it in action.  You can also remove the wordpress specific stuff, hardcode the feed url and use it on a [regular webpage](rtsoft.com) too.  
+Visit [codedojo.com](https://codedojo.com) or [c2kyoto.com](https://c2kyoto.com) to see it in action.  You can also remove the wordpress specific stuff, hardcode the feed url and use it on a [regular webpage](https://rtsoft.com) too.  
 
 ## Installation
 
