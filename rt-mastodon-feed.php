@@ -3,7 +3,7 @@
  * Plugin Name: RT Mastodon Feed
  * Plugin URI: https://codedojo.com/
  * Description: This is a plugin that displays Mastodon Feed.  It uses SimplePie for the rss processing and caching.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Seth A. Robinson
  * Author URI: https://rtsoft.com/
  * License: GPL2
@@ -82,7 +82,18 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
 .mastodon-content {
     color: #555;
 }
-.mastodon-media img, .mastodon-media video {
+.mastodon-media {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.mastodon-media-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .mastodon-media video {
     max-width: 100%;
     max-height: 240px;
     object-fit: contain;
@@ -112,30 +123,36 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
 			// Fetch the profile picture URL once from the feed
 			
             for ($x = 0; $x < $max; $x++) 
-			{
+            {
                 $item = $feedMast->get_item($x);
-
+            
                 $date = $item->get_date('n/j/Y');
                 $link = $item->get_permalink();
                 $content = $item->get_content();
-
+            
                 echo '<div class="mastodon-toot">';
-               echo '<div class="mastodon-date"><a rel="me" href="'.$profilePicLink.'"><img src="'.$profilePicUrl.'" alt="Profile Picture" style="height: 20px; width: 20px;"></a><a href="'.$link.'"> '.$authorName.' on '.$date.'</a></div>';
-			echo '<div class="mastodon-content">'.$content.'</div>';
-
-                $enclosure = $item->get_enclosure();
-                if ($enclosure) 
-				{
-                    $mediaUrl = $enclosure->get_link();
-                    $mediaType = $enclosure->get_type();
-
+                echo '<div class="mastodon-date"><a rel="me" href="'.$profilePicLink.'"><img src="'.$profilePicUrl.'" alt="Profile Picture" style="height: 20px; width: 20px;"></a><a href="'.$link.'"> '.$authorName.' on '.$date.'</a></div>';
+                echo '<div class="mastodon-content">'.$content.'</div>';
+            
+                $enclosures = $item->get_enclosures();
+                if ($enclosures && is_array($enclosures)) 
+                {
                     echo '<div class="mastodon-media">';
-                    if (strpos($mediaType, 'image') !== false)
-					{
-                        echo '<a href="' . $mediaUrl . '" target="_blank"><img src="'.$mediaUrl.'" alt="Mastodon image" class="media"></a>';
-                    } elseif (strpos($mediaType, 'video') !== false)
-					{
-                        echo '<video controls width="100%" height="240"  src="'.$mediaUrl.'">Your browser does not support the video tag.</video>';
+                    foreach ($enclosures as $enclosure) 
+                    {
+                        $mediaUrl = $enclosure->get_link();
+                        $mediaType = $enclosure->get_type();
+                    
+                        echo '<div class="mastodon-media-item">'; // Add this line
+                        if (strpos($mediaType, 'image') !== false)
+                        {
+                            echo '<a href="' . $mediaUrl . '" target="_blank"><img src="'.$mediaUrl.'" alt="Mastodon image" class="media"></a>';
+                        } 
+                        elseif (strpos($mediaType, 'video') !== false)
+                        {
+                            echo '<video controls width="100%" height="240"  src="'.$mediaUrl.'">Your browser does not support the video tag.</video>';
+                        }
+                        echo '</div>'; 
                     }
                     echo '</div>';
                 }
