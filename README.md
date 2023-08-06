@@ -1,13 +1,15 @@
 # rt-mastodon-feed
 A simple widget for Wordpress that displays a Mastodon feed. Uses SimplePie.
 
+Blogpost with more info [here](https://www.codedojo.com/?p=3182)
+
 <a href="github-media/codedojo_example.png"><img align="top" src="github-media/codedojo_example.png" width=400></a>
 <a href="github-media/codeojo_settings.png"><img align="top" src="github-media/codeojo_settings.png" width=400></a>
 
 ## Features
 
 * Super simple, easy to modify
-* If caching is enabled, the feed is process only every hour instead of every time
+* If caching is enabled, the feed is processed only every hour instead of every time
 * Supports images and movies
 
 ## Real world examples
@@ -27,9 +29,10 @@ That's it!
 ## Known Issues and warnings
 
 - It downloads any movies completely even if you haven't clicked them.  I chose to do it this way but others may disagree due to bandwith concerns (there's no way to easily get a thumbnail of a movie via mastodon, is there?)
-- Movies are just white until you click the play button on iOS Safari, not sure why (help obi-wan css master)
-- For some reason I had trouble grabbing the feed avatar automatically so I force you to manually put in the URL to it.  If you right click your avatar and view image, that link should work I guess
+- Movies are just white until you click the play button on iOS Safari, not sure why (help me obi-wan css master)
+- For some reason I had trouble grabbing the feed avatar image automatically so I force you to manually put in the URL to it.  If you right click your avatar and view image, that link should work I guess
 - If you want to customize the css, it's located inside the main .php file because Seth is lazy
 - I've barely used it, so who knows what won't work, for example I should really see what it does with re-toots or whatever you call them over there
+- Wordpress already has some version of SimplePie built in? Huh, didn't know that.  I guess this should be converted to use that instead. whoever cares the most can do it, that's the rtsoft way
 
 ## Patches/fixes appreciated!
