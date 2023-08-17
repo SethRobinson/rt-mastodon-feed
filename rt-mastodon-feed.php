@@ -103,6 +103,23 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
     margin-left: auto;
     margin-right: auto;
   }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 </style>';
 
 		// Fetch the option value
@@ -137,12 +154,12 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
                 echo '<div class="mastodon-date"><a rel="me" href="'.$profilePicLink.'"><img src="'.$profilePicUrl.'" alt="Profile Picture" style="height: 20px; width: 20px;"></a><a href="'.$link.'"> '.$authorName.' on '.$date.'</a></div>';
                 echo '<div class="mastodon-content">'.$content.'</div>'.PHP_EOL;
             
-                 // Add this block to detect YouTube URLs and show the embedded video.  Should probably ignore URLs after the first one?
+                 // This block detects YouTube URLs and show the embedded videos.  Should probably ignore URLs after the first one?
                  preg_match_all('/https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $content, $matches);
                  foreach ($matches[0] as $key => $youtubeUrl) {
                      $youtubeId = $matches[1][$key];
                      $youtubeEmbedCode = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . $youtubeId . '" frameborder="0" allowfullscreen></iframe>';
-                     echo $youtubeEmbedCode;
+                     echo '<div class="video-container">' . $youtubeEmbedCode . '</div>';
                  }
 
                 $enclosures = $item->get_enclosures();
