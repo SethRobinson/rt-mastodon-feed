@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: RT Mastodon Feed
- * Plugin URI: https://codedojo.com/
+ * Plugin URI: https://github.com/SethRobinson/rt-mastodon-feed
  * Description: This is a plugin that displays Mastodon Feed.  It uses SimplePie for the rss processing and caching.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Seth A. Robinson
  * Author URI: https://rtsoft.com/
  * License: GPL2
@@ -43,6 +43,8 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
         );
     }
 
+
+    
 
     public function widget($args, $instance)
 	{
@@ -129,11 +131,20 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
                 $date = $item->get_date('n/j/Y');
                 $link = $item->get_permalink();
                 $content = $item->get_content();
-            
+
+               
                 echo '<div class="mastodon-toot">';
                 echo '<div class="mastodon-date"><a rel="me" href="'.$profilePicLink.'"><img src="'.$profilePicUrl.'" alt="Profile Picture" style="height: 20px; width: 20px;"></a><a href="'.$link.'"> '.$authorName.' on '.$date.'</a></div>';
-                echo '<div class="mastodon-content">'.$content.'</div>';
+                echo '<div class="mastodon-content">'.$content.'</div>'.PHP_EOL;
             
+                 // Add this block to detect YouTube URLs and show the embedded video.  Should probably ignore URLs after the first one?
+                 preg_match_all('/https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $content, $matches);
+                 foreach ($matches[0] as $key => $youtubeUrl) {
+                     $youtubeId = $matches[1][$key];
+                     $youtubeEmbedCode = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' . $youtubeId . '" frameborder="0" allowfullscreen></iframe>';
+                     echo $youtubeEmbedCode;
+                 }
+
                 $enclosures = $item->get_enclosures();
                 if ($enclosures && is_array($enclosures)) 
                 {
