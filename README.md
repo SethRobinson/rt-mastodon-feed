@@ -10,7 +10,7 @@ Blogpost with more info [here](https://www.codedojo.com/?p=3182)
 
 * Super simple, easy to modify
 * If caching is enabled, the feed is processed only every hour instead of every time
-* Supports images and movies
+* Supports multiple images, movies, detects Youtube links and embeds as movie
 
 ## Real world examples
 

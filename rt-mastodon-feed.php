@@ -3,7 +3,7 @@
  * Plugin Name: RT Mastodon Feed
  * Plugin URI: https://github.com/SethRobinson/rt-mastodon-feed
  * Description: This is a plugin that displays Mastodon Feed.  It uses SimplePie for the rss processing and caching.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Seth A. Robinson
  * Author URI: https://rtsoft.com/
  * License: GPL2
@@ -62,7 +62,8 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
         $feedMast->set_cache_location($_SERVER['DOCUMENT_ROOT'] . '/cache');
         $cacheEnabled = get_option('mastodon_cache_enabled', 0);
 		$feedMast->enable_cache($cacheEnabled);
-        $feedMast->init();
+        //$feedMast->force_feed(true);
+		$feedMast->init();
 
 		//$profilePicUrl = 'https://cdn.masto.host/mastodongamedevplace/accounts/avatars/110/672/077/339/445/959/original/6a25cddafe093b73.png';
 		
@@ -143,12 +144,22 @@ class RT_Mastodon_Feed_Widget extends WP_Widget
 			
             for ($x = 0; $x < $max; $x++) 
             {
-                $item = $feedMast->get_item($x);
-            
-                $date = $item->get_date('n/j/Y');
-                $link = $item->get_permalink();
-                $content = $item->get_content();
+				$item = $feedMast->get_item($x);
 
+				$date_str = $item->get_date('U'); // Fetch the date as Unix Timestamp
+				$original_timezone = new DateTimeZone('UTC'); // Assuming the original timezone is UTC; adjust as needed
+				//$new_timezone = new DateTimeZone('Asia/Tokyo'); // The timezone you want to convert to
+				$new_timezone = new DateTimeZone(date_default_timezone_get());
+				
+				// Create DateTime object and set its timezone
+				$date_obj = new DateTime("@$date_str", $original_timezone); // Create date from Unix Timestamp
+				$date_obj->setTimezone($new_timezone); // Convert to new timezone
+
+				// Format the date as you like
+				$date = $date_obj->format('n/j/Y'); 
+
+				$link = $item->get_permalink();
+				$content = $item->get_content();
                
                 echo '<div class="mastodon-toot">';
                 echo '<div class="mastodon-date"><a rel="me" href="'.$profilePicLink.'"><img src="'.$profilePicUrl.'" alt="Profile Picture" style="height: 20px; width: 20px;"></a><a href="'.$link.'"> '.$authorName.' on '.$date.'</a></div>';
